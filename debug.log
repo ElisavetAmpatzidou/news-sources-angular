@@ -1,0 +1,13 @@
+[1216/205416.120:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[1217/010850.937:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[1221/144311.655:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0102/135234.365:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0102/153347.380:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0102/161507.920:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0102/161545.852:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\elisa\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\f721dd57-98b4-4a9b-a923-e64181fff4b2: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0102/161545.908:ERROR:process_reader_win.cc(151)] SuspendThread: Δεν επιτρέπεται η πρόσβαση. (0x5)
+[0102/161545.908:ERROR:process_reader_win.cc(151)] SuspendThread: Δεν επιτρέπεται η πρόσβαση. (0x5)
+[0102/161545.908:ERROR:exception_snapshot_win.cc(99)] thread ID 31544 not found in process
+[0116/215328.240:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0119/144722.521:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)
+[0127/181415.692:ERROR:directory_reader_win.cc(43)] FindFirstFile: Το σύστημα δεν είναι σε θέση να εντοπίσει την καθορισμένη διαδρομή δίσκου. (0x3)

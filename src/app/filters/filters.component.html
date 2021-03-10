@@ -1,0 +1,16 @@
+<div class="filters">
+    <form [formGroup]="filterForm">
+        <div class="search">
+            <input matInput placeholder="Search Channels" formControlName="searchName" (keyup)="searchChange()">
+        </div>
+
+        <div class="category">
+            <mat-form-field appearance="fill">
+                <mat-label>Choose Category</mat-label>
+                <mat-select formControlName="categoryName" >
+                    <mat-option *ngFor="let cat of categories" [value]="cat" (click)="categoryChange()">{{cat}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>

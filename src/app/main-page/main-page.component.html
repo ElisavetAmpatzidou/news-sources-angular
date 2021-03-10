@@ -1,0 +1,23 @@
+<app-header></app-header>
+<div class="main">
+  <app-filters  [newsSource]="newsSource" ></app-filters>
+  <hr>
+  <div class="card-container">
+    <div *ngFor="let source of newsSource?.articles">
+      <app-card [source]="source"></app-card>
+    </div>
+  </div>
+
+  <mat-paginator [length]= "newsSource?.totalResults" [pageIndex]= "pageIndex" [pageSize]="6" (page)="pageChange($event)">
+  </mat-paginator>
+
+</div>
+<div class="footer">
+  <a href="https://www.google.com/">Privacy</a>
+  <p> | </p>
+  <a href="https://www.google.com/">Terms</a>
+  <p> | </p>
+  <a href="https://www.google.com/">Cookies</a>
+  <p> | </p>
+  <a href="https://www.google.com/">More</a>
+</div>
