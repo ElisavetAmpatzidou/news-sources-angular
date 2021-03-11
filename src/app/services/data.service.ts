@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Injectable({
@@ -7,25 +7,17 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class DataServiceService {
   
-  searchSubject = new Subject<string>();
-  categorySubject = new Subject<string>();
-  pageSubject = new Subject<number>();
+  searchSubject = new BehaviorSubject<string>("a"); 
+  categorySubject = new BehaviorSubject<string>("");
+  pageSubject = new BehaviorSubject<number>(1);
 
   constructor() { }
 
   
-  newSearch(searchName: string){
-    this.searchSubject.pipe(debounceTime(300)).subscribe();
+  newSearch(searchName: string, categoryName: string, page: number){
     this.searchSubject.next(searchName);
-  }
-
-  newCategory(categoryName: string){
     this.categorySubject.next(categoryName);
-  }
-  
-  newPage(page: number){
     this.pageSubject.next(page);
   }
-
 
 }

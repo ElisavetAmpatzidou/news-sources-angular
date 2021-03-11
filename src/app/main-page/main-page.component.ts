@@ -10,9 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataServiceService } from '../services/data.service';
 
-
-
-
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -21,9 +18,9 @@ import { DataServiceService } from '../services/data.service';
 export class MainPageComponent implements OnInit {
 
   newsSource: Sources;
-  pageIndex = 1;
-  searchName = "a";
-  categoryName = "";
+  pageIndex;
+  searchName;
+  categoryName;
   destroyedSubject = new Subject();
 
 
@@ -32,23 +29,18 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
-    this.newsService.getSources(this.searchName, this.categoryName, this.pageIndex.toString()).pipe(withLatestFrom(this.route.queryParams), takeUntil(this.destroyedSubject)).subscribe(
-      ([data, queryParam]) => {
-        this.newsSource = data;
-        this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
+    this.dataService.searchSubject.pipe(takeUntil(this.destroyedSubject)).subscribe((s) => {
+      this.searchName = s;
+    });
+    this.dataService.categorySubject.pipe(takeUntil(this.destroyedSubject)).subscribe((c) => {
+      this.categoryName = c;
+    });
+    this.dataService.pageSubject.pipe(takeUntil(this.destroyedSubject)).subscribe((p) => {
+      this.pageIndex = p;
+    });
+    console.log(this.searchName, this.categoryName, this.pageIndex.toString());
 
-        this.pageIndex = queryParam.page - 1;
-        this.searchName = queryParam.searchName;
-        this.categoryName = queryParam.categoryName;
-        this.pageChange({ pageIndex: queryParam.page ? queryParam.page - 1 : 0 });
-        this.getNewsSources(this.searchName,this.categoryName,this.pageIndex.toString());
-
-
-      }
-    );
-
-
+    this.getNewsSources(this.searchName, this.categoryName, this.pageIndex.toString());
   }
 
   ngOnDestroy() {
@@ -57,17 +49,12 @@ export class MainPageComponent implements OnInit {
   }
 
   getNewsSources(searchName: string, categoryName: string, page: string) {
-    this.newsService.getSources(searchName, categoryName, page).subscribe(
+    this.newsService.getSources(searchName, categoryName, page).pipe(takeUntil(this.destroyedSubject)).subscribe(
       (data) => {
-        console.warn(data);
         this.newsSource = data;
       }
     )
-    this.router.navigate([], { relativeTo: this.route, queryParams: { search: searchName, category: categoryName, page: page }, queryParamsHandling: 'merge' });
-  }
-
-  pageChange(event) {
-    this.dataService.newPage(event.pageIndex + 1);
+    this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
   }
 
 }

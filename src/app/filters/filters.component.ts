@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup} from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import {  Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { DataServiceService } from '../services/data.service';
 
 @Component({
@@ -18,26 +20,26 @@ export class FiltersComponent implements OnInit {
     'business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'
   ]
   filterForm : FormGroup;
+  destroyedSubject = new Subject();
 
-  constructor(private fb: FormBuilder, private dataService: DataServiceService) { }
+  constructor(private fb: FormBuilder, private dataService: DataServiceService, private router:Router) { }
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({
       searchName: '',
       categoryName: ''
     });
-
-  }
-  searchChange(){
-    this.dataService.newSearch(this.filterForm.value.searchName);
-    console.log(this.filterForm.value.searchName);
     
+   
+    this.filterForm.valueChanges.pipe(takeUntil(this.destroyedSubject)).subscribe((n) => {
+        this.dataService.newSearch(n.searchName, n.categoryName, 1);
+        this.router.navigate(['/main-page'], { queryParams: {search: n.searchName,category: n.categoryName,page: 1},queryParamsHandling: 'merge',});
+      });
+  }
+  ngOnDestroy() {
+    this.destroyedSubject.next();
+    this.destroyedSubject.complete();
   }
 
-  categoryChange(){
-    this.dataService.newCategory(this.filterForm.value.categoryName);
-    console.log(this.filterForm.value.categoryName);
-  }
-  
   
 }

@@ -1,11 +1,8 @@
-.header{
-    position: relative;
-}
-
 
 .main{
     text-align: right;
     padding: 40px 120px;
+    overflow-x: hidden;
     
     hr{
         width: 100%;
@@ -18,6 +15,7 @@
     
 }
 .footer{
+    overflow-x: hidden;
     padding: 5px;
     width: 100%;
     background-color: blue;
@@ -37,6 +35,7 @@
 @media only screen and (max-width: 570px) {
     .topbar{
         width: 100%;
+        overflow-x: hidden;
 
     }
     .top-background{
@@ -69,6 +68,7 @@
 @media only screen and (max-width: 45px) {
     .topbar{
         width: 100%;
+        overflow-x: hidden;
 
     }
     .top-background{
