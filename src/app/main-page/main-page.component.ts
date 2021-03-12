@@ -24,23 +24,24 @@ export class MainPageComponent implements OnInit {
   destroyedSubject = new Subject();
 
 
-
   constructor(private newsService: NewsApiServiceService, private dataService: DataServiceService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
+  
     this.dataService.searchSubject.pipe(takeUntil(this.destroyedSubject)).subscribe((s) => {
       this.searchName = s;
     });
     this.dataService.categorySubject.pipe(takeUntil(this.destroyedSubject)).subscribe((c) => {
       this.categoryName = c;
     });
-    this.dataService.pageSubject.pipe(takeUntil(this.destroyedSubject)).subscribe((p) => {
-      this.pageIndex = p;
-    });
+    
+    if(this.pageIndex == undefined){
+      this.pageIndex= 1;
+    }
     console.log(this.searchName, this.categoryName, this.pageIndex.toString());
 
     this.getNewsSources(this.searchName, this.categoryName, this.pageIndex.toString());
+    
   }
 
   ngOnDestroy() {
@@ -55,6 +56,11 @@ export class MainPageComponent implements OnInit {
       }
     )
     this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
+  }
+  pageChange(event){
+    this.pageIndex= event.pageIndex+1;
+    this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
+
   }
 
 }
