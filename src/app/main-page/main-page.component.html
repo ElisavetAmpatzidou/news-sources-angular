@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="main">
-  <app-filters  [newsSource]="newsSource" ></app-filters>
+  <app-filters></app-filters>
   <hr>
   <div class="card-container">
     <div *ngFor="let source of newsSource?.articles">
@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <mat-paginator [length]= "newsSource?.totalResults" [pageIndex]= "pageIndex" [pageSize]="6" (page)="pageChange($event)">
+  <mat-paginator [length]="newsSource?.totalResults" [pageIndex]="pageIndex" [pageSize]="6" (page)="pageChange($event)">
   </mat-paginator>
 
 </div>

@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DataServiceService } from '../services/data.service';
 
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -18,30 +19,40 @@ import { DataServiceService } from '../services/data.service';
 export class MainPageComponent implements OnInit {
 
   newsSource: Sources;
-  pageIndex;
-  searchName;
-  categoryName;
+  pageIndex = 0;
+  page = '1';
+  search = 'a';
+  category = '';
   destroyedSubject = new Subject();
 
 
-  constructor(private newsService: NewsApiServiceService, private dataService: DataServiceService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private newsService: NewsApiServiceService, private dataService: DataServiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-  
-    this.dataService.searchSubject.pipe(takeUntil(this.destroyedSubject)).subscribe((s) => {
-      this.searchName = s;
-    });
-    this.dataService.categorySubject.pipe(takeUntil(this.destroyedSubject)).subscribe((c) => {
-      this.categoryName = c;
-    });
-    
-    if(this.pageIndex == undefined){
-      this.pageIndex= 1;
-    }
-    console.log(this.searchName, this.categoryName, this.pageIndex.toString());
+    this.router.navigate(['/main-page'], { queryParams: { q: 'a', category: '', page: '1' }, queryParamsHandling: 'merge' });
+    combineLatest([
+      this.dataService.searchSubject,
+      this.dataService.categorySubject,
+      this.dataService.pageSubject
+    ]).pipe(withLatestFrom(this.route.queryParams), takeUntil(this.destroyedSubject)).subscribe(
+      ([[search, category, pageIndex], queryParam]) => {
 
-    this.getNewsSources(this.searchName, this.categoryName, this.pageIndex.toString());
-    
+        this.router.navigate(['/main-page'], { queryParams: { q: 'a', category: '', page: '1' }, queryParamsHandling: 'merge' });
+       
+        if (queryParam.q || queryParam.category || queryParam.page) {
+          this.search = queryParam.q || 'a';
+          this.category = queryParam.category || '';
+          this.page = queryParam.page || pageIndex;
+          this.getNewsSources(this.search, this.category, this.pageIndex);
+        }
+        else {
+          this.getNewsSources(search, category, pageIndex);
+        }
+
+
+
+      });
+
   }
 
   ngOnDestroy() {
@@ -49,17 +60,20 @@ export class MainPageComponent implements OnInit {
     this.destroyedSubject.complete();
   }
 
-  getNewsSources(searchName: string, categoryName: string, page: string) {
+  getNewsSources(searchName: string, categoryName: string, page: number) {
     this.newsService.getSources(searchName, categoryName, page).pipe(takeUntil(this.destroyedSubject)).subscribe(
       (data) => {
+        console.log("get data" + searchName + categoryName + page);
+        console.warn(data);
         this.newsSource = data;
       }
     )
-    this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
+    this.router.navigate(['/main-page'], { queryParams: { q: searchName, category: categoryName, page: (page + 1).toString() }, queryParamsHandling: 'merge' });
   }
-  pageChange(event){
-    this.pageIndex= event.pageIndex+1;
-    this.router.navigate([], { relativeTo: this.route, queryParams: { search: this.searchName, category: this.categoryName, page: this.pageIndex.toString() }, queryParamsHandling: 'merge' });
+  pageChange(event) {
+    this.pageIndex = event.pageIndex;
+    this.dataService.pageSubject.next(this.pageIndex);
+    this.router.navigate(['/main-page'], { queryParams: { page: (this.pageIndex + 1).toString() }, queryParamsHandling: 'merge' });
 
   }
 

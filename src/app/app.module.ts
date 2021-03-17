@@ -20,15 +20,16 @@ import {NewsApiServiceService} from './services/news-api.service';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from './card/card.component';
-import { FiltersComponent } from './filters/filters.component';
+
 import { HeaderComponent } from './header/header.component';
+import { FiltersComponent } from './filters/filters.component';
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
     CardComponent,
-    FiltersComponent,
-    HeaderComponent
+    HeaderComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

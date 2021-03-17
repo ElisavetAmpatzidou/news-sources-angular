@@ -9,7 +9,7 @@ import {Sources} from '../models/Sorces';
 export class NewsApiServiceService {
 
   constructor(private http: HttpClient) { }
-  getSources(s="a", c="", page="1"):Observable<Sources>{
+  getSources(s, c, page):Observable<Sources>{
     const params = new HttpParams()
     .set('q', s)
     .set('category', c)

@@ -2,6 +2,7 @@
     position: relative;
     width: 100%;
     overflow-x: hidden;
+    
 }
 .topbar{
     width: 100%;
@@ -9,6 +10,10 @@
     text-align: right;
     button{
         margin: 8px;
+    }
+    #borderbutton{
+        background-color: blue;
+        border: blue;
     }
 }
 .top-background{

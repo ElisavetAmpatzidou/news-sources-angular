@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ export class DataServiceService {
   
   searchSubject = new BehaviorSubject<string>("a"); 
   categorySubject = new BehaviorSubject<string>("");
-  pageSubject = new BehaviorSubject<number>(1);
+  pageSubject = new BehaviorSubject<number>(0);
 
   constructor() { }
 

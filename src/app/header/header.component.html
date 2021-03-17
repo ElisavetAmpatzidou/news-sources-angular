@@ -1,7 +1,9 @@
 <div class="header">
     <div class="topbar">
-        <button mat-fab [matMenuTriggerFor]="menu">LC</button>
-        <button mat-button [matMenuTriggerFor]="menu"> Hi lara!</button>
+        <button [matMenuTriggerFor]="menu" id="borderbutton">
+            <button mat-fab >LC</button>
+            <button mat-button="menu"> Hi lara!</button>
+        </button>
 
         <mat-menu #menu="matMenu">
             <button mat-menu-item>Settings</button>
@@ -10,9 +12,9 @@
     </div>
 </div>
 <div class="top-background">
-    <img src="https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+    <img src="../../assets/background.jpeg" alt="Background Photo">
 </div>
 <div class="profile">
-    <img src="https://image.shutterstock.com/image-vector/male-profile-icon-260nw-197167847.jpg">
+    <img src="../../assets/lc.jpg" alt= "Profile Photo">
     <p>Lara Croft</p>
 </div>
