@@ -1,3 +1,21 @@
 .filters{
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.search{
+    margin: 1%;
+    border: 0.4px dotted grey;
+}
+.category{
+    margin:1%;
+}
+
+@media only screen and (max-width: 570px) {
+   
+    .filters{
+        display: flex;
+        flex-direction: column;
+    }
+
 }

@@ -1,12 +1,12 @@
 <mat-card class="card">
     <mat-card-header>
   
-      <img mat-card-image src="{{source.urlToImage}}" alt="Photo of a Headline">
+      <img mat-card-image [src]="source?.urlToImage || '../assets/newsImage.jpg' " alt="Photo of a Headline">
       
-      <mat-card-title>{{source.source.name}}</mat-card-title>
+      <mat-card-title>{{source?.source.name}}</mat-card-title>
       <mat-card-content>
         <p>
-         {{source.description}}
+         {{source?.description}}
         </p>
       </mat-card-content>
     </mat-card-header>

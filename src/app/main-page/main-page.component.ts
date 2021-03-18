@@ -19,8 +19,8 @@ import { DataServiceService } from '../services/data.service';
 export class MainPageComponent implements OnInit {
 
   newsSource: Sources;
-  pageIndex = 0;
-  page = '1';
+  pageIndex ;
+  //page = '1';
   search = 'a';
   category = '';
   destroyedSubject = new Subject();
@@ -29,28 +29,17 @@ export class MainPageComponent implements OnInit {
   constructor(private newsService: NewsApiServiceService, private dataService: DataServiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.router.navigate(['/main-page'], { queryParams: { q: 'a', category: '', page: '1' }, queryParamsHandling: 'merge' });
+    
     combineLatest([
       this.dataService.searchSubject,
       this.dataService.categorySubject,
       this.dataService.pageSubject
     ]).pipe(withLatestFrom(this.route.queryParams), takeUntil(this.destroyedSubject)).subscribe(
       ([[search, category, pageIndex], queryParam]) => {
-
-        this.router.navigate(['/main-page'], { queryParams: { q: 'a', category: '', page: '1' }, queryParamsHandling: 'merge' });
-       
-        if (queryParam.q || queryParam.category || queryParam.page) {
-          this.search = queryParam.q || 'a';
-          this.category = queryParam.category || '';
-          this.page = queryParam.page || pageIndex;
+          this.search = queryParam.q || search;
+          this.category = queryParam.category || category;
+          this.pageIndex = queryParam.page-1 || 0;
           this.getNewsSources(this.search, this.category, this.pageIndex);
-        }
-        else {
-          this.getNewsSources(search, category, pageIndex);
-        }
-
-
-
       });
 
   }
@@ -68,12 +57,16 @@ export class MainPageComponent implements OnInit {
         this.newsSource = data;
       }
     )
-    this.router.navigate(['/main-page'], { queryParams: { q: searchName, category: categoryName, page: (page + 1).toString() }, queryParamsHandling: 'merge' });
+    this.router.navigate(['/main-page'], { queryParams: { q: searchName, category: categoryName, page: (page + 1) }, queryParamsHandling: 'merge' });
   }
   pageChange(event) {
+    console.log(event);
+    this.dataService.pageSubject.next(event.pageIndex);
+    
+    this.router.navigate(['/main-page'], { queryParams: { page: (event.pageIndex+1 )}, queryParamsHandling: 'merge' });
+
     this.pageIndex = event.pageIndex;
-    this.dataService.pageSubject.next(this.pageIndex);
-    this.router.navigate(['/main-page'], { queryParams: { page: (this.pageIndex + 1).toString() }, queryParamsHandling: 'merge' });
+    
 
   }
 

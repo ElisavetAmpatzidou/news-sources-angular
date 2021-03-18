@@ -33,6 +33,7 @@ export class FiltersComponent implements OnInit {
       this.dataService.categorySubject.next(c);
       this.router.navigate(['/main-page'], { queryParams: { category: c }, queryParamsHandling: 'merge' });
     });
+    
 
 
   }
