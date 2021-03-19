@@ -1,7 +1,10 @@
 <div class="filters">
     <form [formGroup]="filterForm">
         <div class="search">
-            <input matInput placeholder="Search Channels" formControlName="searchName">
+            <mat-form-field appearance="fill">
+                <mat-label>Search Channels</mat-label>
+                <input matInput formControlName="searchName">
+            </mat-form-field>
         </div>
 
         <div class="category">
